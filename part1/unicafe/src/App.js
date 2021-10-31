@@ -9,6 +9,11 @@ const Button = ({caption, onClick}) => (
 )
 
 const Statistics = ({statistics}) => {
+  if (statistics[3].num == 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
   return (
   <>
   <Statistic caption={statistics[0].caption} num={statistics[0].num} />
