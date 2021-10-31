@@ -9,24 +9,29 @@ const Button = ({caption, onClick}) => (
 )
 
 const Statistics = ({statistics}) => {
-  if (statistics[3].num == 0) {
+  if (statistics[3].num === 0) {
     return (
       <p>No feedback given</p>
     )
   }
   return (
-  <>
-  <Statistic caption={statistics[0].caption} num={statistics[0].num} />
-  <Statistic caption={statistics[1].caption} num={statistics[1].num} />
-  <Statistic caption={statistics[2].caption} num={statistics[2].num} />
-  <Statistic caption={statistics[3].caption} num={statistics[3].num} />
-  <Statistic caption={statistics[4].caption} num={statistics[4].num} />
-  <Statistic caption={statistics[5].caption} num={statistics[5].num} />
-  </>
+  <table>
+    <tbody>
+      <Statistic caption={statistics[0].caption} num={statistics[0].num} />
+      <Statistic caption={statistics[1].caption} num={statistics[1].num} />
+      <Statistic caption={statistics[2].caption} num={statistics[2].num} />
+      <Statistic caption={statistics[3].caption} num={statistics[3].num} />
+      <Statistic caption={statistics[4].caption} num={statistics[4].num} />
+      <Statistic caption={statistics[5].caption} num={statistics[5].num} />
+    </tbody>
+  </table>
 )}
 
 const Statistic = ({caption, num}) => (
-  <div>{caption} {num}</div>
+  <tr>
+    <td>{caption}</td>
+    <td>{num}</td>
+  </tr>
 )
 
 const App = () => {
