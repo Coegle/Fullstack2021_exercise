@@ -2,6 +2,25 @@ import React, { useState } from 'react'
 
 const Person = ({person}) => <p>{person.name} {person.number}</p>
 
+const Persons = ({persons, filter}) => (
+  <>
+  {(filter === '' ? persons : persons.filter(it => it.name.toLowerCase().includes(filter.toLowerCase())))
+    .map(it => <Person key={it.name} person={it} />)}
+  </>
+)
+const Filter = ({onSetFilter}) => (
+  <div>filter shown with <input onChange={onSetFilter} /></div>
+)
+
+const PersonForm = ({onSubmit, newName, onNewNameChange, newNumber, onNewNumberChange}) => (
+  <form onSubmit={onSubmit}>
+    <div>name: <input value={newName} onChange={onNewNameChange} /></div>
+    <div>number: <input value={newNumber} onChange={onNewNumberChange} /></div>
+    <div>
+      <button type="submit">add</button>
+    </div>
+  </form>
+)
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -12,6 +31,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  
   const onSubmit = (event) => {
     event.preventDefault()
     if (persons.map(it => it.name).includes(newName)) {
@@ -32,25 +52,14 @@ const App = () => {
     setFilter(event.target.value)
   }
   
-  const filteredList = (filter === '' ? 
-                        persons : 
-                        persons.filter(it => it.name.toLowerCase().includes(filter.toLowerCase())))
-                        .map(it => <Person key={it.name} person={it} />)
-  
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>filter shown with <input onChange={onSetFilter} /></div>
+      <Filter onSetFilter={onSetFilter} />
       <h2>Add a new</h2>
-      <form onSubmit={onSubmit}>
-        <div>name: <input value={newName} onChange={onNewNameChange} /></div>
-        <div>number: <input value={newNumber} onChange={onNewNumberChange} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm onSubmit={onSubmit} newName={newName} onNewNameChange={onNewNameChange} newNumber={newNumber} onNewNumberChange={onNewNumberChange} />
       <h2>Numbers</h2>
-      {filteredList}
+      <Persons filter={filter} persons={persons} />
     </div>
   )
 }
