@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import personsService from './services/persons'
 
-const Person = ({person}) => <p>{person.name} {person.number}</p>
+const Person = ({person, onClick}) => (
+  <p>
+    {person.name} {person.number}
+    <button onClick={()=>{onClick(person)}}>delete</button>
+  </p>
+)
 
-const Persons = ({persons, filter}) => (
+const Persons = ({persons, filter, onClick}) => (
   <>
   {(filter === '' ? persons : persons.filter(it => it.name.toLowerCase().includes(filter.toLowerCase())))
-    .map(it => <Person key={it.name} person={it} />)}
+    .map(it => <Person key={it.name} person={it} onClick={onClick} />)}
   </>
 )
 const Filter = ({onSetFilter}) => (
@@ -52,6 +57,15 @@ const App = () => {
   const onSetFilter = (event) => {
     setFilter(event.target.value)
   }
+  const onClickDelete = (person) => {
+    if(window.confirm(`Delete ${person.name} ?`)) {
+      personsService
+      .deletePerson(person.id)
+      .then(() => {
+        setPersons(persons.filter(it => it.id !== person.id))
+      })
+    }
+  }
   useEffect(() => {
     personsService
       .getAll()
@@ -66,7 +80,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm onSubmit={onSubmit} newName={newName} onNewNameChange={onNewNameChange} newNumber={newNumber} onNewNumberChange={onNewNumberChange} />
       <h2>Numbers</h2>
-      <Persons filter={filter} persons={persons} />
+      <Persons filter={filter} persons={persons} onClick={onClickDelete} />
     </div>
   )
 }
