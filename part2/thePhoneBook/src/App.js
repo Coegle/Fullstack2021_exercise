@@ -35,6 +35,12 @@ const App = () => {
       return
     }
     setPersons(persons.concat({name: newName, number: newNumber}))
+    const newPerson = {name: newName, number: newNumber}
+    axios
+      .put('http://localhost:3001/persons', newPerson)
+      .then(repsonse => {
+        setPersons(persons.concat(repsonse.data))
+    })
     setNewName('')
     setNewNumber('')
   }
