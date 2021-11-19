@@ -46,7 +46,7 @@ const App = () => {
   return (
     <div>
       <div>
-        find countries 
+        find countries
         <input value={searchCountry} onInput={onsearchCountryChange} />
       </div>
 
