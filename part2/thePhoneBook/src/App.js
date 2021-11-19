@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import personsService from './services/persons'
+import Notification from './components/Notifications'
 
 const Person = ({person, onClick}) => (
   <p>
@@ -32,7 +33,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
-  
+  const [ message, setMessage ] = useState(null)
+
   const onSubmit = (event) => {
     event.preventDefault()
     if (persons.map(it => it.name).includes(newName)) {
@@ -44,9 +46,13 @@ const App = () => {
         const id = persons.find(it => it.name === newName).id
         personsService
           .update(id, updatedPerson)
-          .then( data =>
+          .then( data => {
             setPersons(persons.map(it => it.id === id ? data : it))
-          )
+            setMessage(`${newName}'s number is changed to ${newNumber}.`)
+            setTimeout(() => setMessage(null), 2000)
+            setNewName('')
+            setNewNumber('')
+          })
       }
       return
     }
@@ -55,6 +61,8 @@ const App = () => {
       .create(newPerson)
       .then(data => {
         setPersons(persons.concat(data))
+        setMessage(`${newName} added.`)
+        setTimeout(() => setMessage(null), 2000)
     })
     setNewName('')
     setNewNumber('')
@@ -74,6 +82,13 @@ const App = () => {
       .deletePerson(person.id)
       .then(() => {
         setPersons(persons.filter(it => it.id !== person.id))
+        setMessage(`${person.name} deleted.`)
+        setTimeout(() => setMessage(null), 2000)
+      })
+      .catch( () => {
+        setMessage(`Information of ${person.name} has already been removed from server.`)
+        setTimeout(() => setMessage(null), 2000)
+        setPersons(persons.filter(it => it.id !== person.id))
       })
     }
   }
@@ -87,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter onSetFilter={onSetFilter} />
       <h2>Add a new</h2>
       <PersonForm onSubmit={onSubmit} newName={newName} onNewNameChange={onNewNameChange} newNumber={newNumber} onNewNumberChange={onNewNumberChange} />
