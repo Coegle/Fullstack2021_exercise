@@ -15,11 +15,12 @@ const App = () => {
         setCountries(repsonse.data)
       })
       .catch(error => {
-        if (error.response.status === 404) {
+        if (error.status === 404) {
           setCountries([])
         }
       })
   }
+
   const searchResult = () => {
     if (searchCountry.length === 0) {
       return <p>Type to search.</p>
@@ -32,10 +33,14 @@ const App = () => {
       return <CountryDetail country={countries[0]} />
     }
     else if (countries.length > 1 && countries.length < 10) {
-      return <CountryList countries={countries} />
+      return <CountryList countries={countries} showDetail={onClickShow} />
     }
 
     return <p>Too many matches, specify another filter.</p>
+  }
+
+  const onClickShow = (id) => {
+    setCountries(countries.filter(it => it.ccn3 === id))
   }
 
   return (

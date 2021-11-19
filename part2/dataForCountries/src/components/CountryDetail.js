@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 const LanguagesList = ({ languages }) => (<ul>{Object.keys(languages).map(key => <li key={key}>{languages[key]}</li>)}</ul>)
 

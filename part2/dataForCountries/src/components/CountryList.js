@@ -1,10 +1,19 @@
 import React from "react"
 
-const CountryList = ({ countries }) => {
+const CountryColumn = ({ country, showDetail }) => {
     return (
-        <>
-            {countries.map(it => <p key={it.ccn3}>{it.name.official}</p>)}
-        </>
+        <li>
+            {country.name.official}
+            <button onClick={() => showDetail(country.ccn3)}>show</button>
+        </li>
+    )
+}
+
+const CountryList = ({ countries, showDetail }) => {
+    return (
+        <ul>
+            {countries.map(it => <CountryColumn key={it.ccn3} country={it} showDetail={showDetail}/>)}
+        </ul>
     )
 }
 
