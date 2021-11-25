@@ -1,0 +1,29 @@
+{
+  "name": "phonebook_server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf ./build && cd ../Fullstack2021_exercise/part2/thePhoneBook && npm run build && cp -r build ../../../phonebook_server",
+    "deploy": "git push heroku master",
+    "deploy:all": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "mongoose-unique-validator": "^3.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "eslint": "^8.3.0",
+    "eslint-plugin-react": "^7.27.1",
+    "nodemon": "^2.0.15"
+  }
+}
