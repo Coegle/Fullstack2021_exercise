@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const Notification = ({ messageObj }) => {
   if (messageObj === null) {
@@ -12,7 +12,7 @@ const Notification = ({ messageObj }) => {
       'color': 'green',
     }
 
-  style['border-style'] = 'solid'
+  style['borderStyle'] = 'solid'
   return (
     <div style={style}>{Object.values(messageObj)[0]}</div>
   )

@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Togglable from './components/Togglable'
+import CreateBlogForm from './components/CreateBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('Tester')
-  const [url, setUrl] = useState('https://www.baidu.com')
   const [message, setMessage] = useState(null)
+  const createBlogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    getBlogs()
   }, [])
 
+  const getBlogs = async () => {
+    const blogs = await blogService.getAll()
+    setBlogs(blogs)
+  }
   useEffect(() => {
     const userInLocal = window.localStorage.getItem('userInfo')
     if (userInLocal) {
@@ -38,10 +40,10 @@ const App = () => {
     }
     catch (excep) {
       const msg = { error: excep.response.data.error }
-      notification(msg)
+      notify(msg)
     }
   }
-  const notification = msg => {
+  const notify = msg => {
     setMessage(msg)
     setTimeout(() => {
       setMessage(null)
@@ -51,46 +53,38 @@ const App = () => {
     window.localStorage.removeItem('userInfo')
     setUser(null)
   }
-
-  const handleCreateNewBlog = async event => {
-    event.preventDefault()
+  const addLikes = async id => {
+    const oldBlog = blogs.find(it => it.id === id)
+    oldBlog.likes += 1
     try {
-      const res = await blogService.create({ title, author, url })
+      const updatedBlog = await blogService.update(oldBlog)
+      const updatedBlogs = blogs.map(it => it.id === id ? updatedBlog : it)
+      setBlogs(updatedBlogs)
+    } catch (excep) {
+      console.log(excep.response)
+    }
+  }
+  const createNewBlog = async newBlog => {
+    createBlogFormRef.current.toggleVisibility()
+    try {
+      const res = await blogService.create(newBlog)
       setBlogs(blogs.concat(res))
-      const msg = { info: `a new blog ${title} by ${author} added` }
-      notification(msg)
     } catch (excep) {
       const msg = { error: excep.response.data.error }
-      notification(msg)
+      notify(msg)
     }
+    const msg = { info: `a new blog ${newBlog.title} by ${newBlog.author} added` }
+    notify(msg)
   }
 
   const createBlogForm = () => {
     return (
-      <form onSubmit={handleCreateNewBlog}>
-        <div>
-          title:
-          <input
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author:
-          <input
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url:
-          <input
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type='submit'>create</button>
-      </form>
+      <Togglable
+        buttonLabel={'create a blog'} ref={createBlogFormRef}>
+        <CreateBlogForm
+          createNewBlog={createNewBlog}
+        />
+      </Togglable>
     )
   }
 
@@ -135,9 +129,11 @@ const App = () => {
             </button>
           </p>
           {createBlogForm()}
-          {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
-          )}
+          {blogs
+            .sort((a, b) => { return b.likes - a.likes })
+            .map(blog =>
+              <Blog key={blog.id} blog={blog} addLikes={addLikes} updateBlogs={getBlogs} notify={notify}/>
+            )}
         </div>
       }
     </div>
