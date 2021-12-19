@@ -14,7 +14,11 @@ const Notification = ({ messageObj }) => {
 
   style['borderStyle'] = 'solid'
   return (
-    <div style={style}>{Object.values(messageObj)[0]}</div>
+    <div
+      className='error'
+      style={style}>
+      {Object.values(messageObj)[0]}
+    </div>
   )
 }
 

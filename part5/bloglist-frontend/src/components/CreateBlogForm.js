@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 const CreateBlogForm = ({ createNewBlog }) => {
   const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('Tester')
-  const [url, setUrl] = useState('https://www.baidu.com')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   const handleOnSubmit = event => {
     event.preventDefault()
@@ -38,7 +38,11 @@ const CreateBlogForm = ({ createNewBlog }) => {
           onChange={({ target }) => setUrl(target.value)}
         />
       </div>
-      <button type='submit'>create</button>
+      <button
+        id='createBlogButton'
+        type='submit'>
+        create
+      </button>
     </form>
   )
 }
