@@ -30,17 +30,21 @@ const Blog = ({ blog, addLikes, updateBlogs, notify }) => {
   }
   const blogDetail = () => {
     return (
-      <div style={blogStyle}>
-        <div>
+      <div style={blogStyle} className='blogDetail'>
+        <div className='title'>
           {blog.title}
           <button onClick={toggleDetailed}>hide</button>
         </div>
-        <div>{blog.url}</div>
-        <div>
+        <div className='url'>
+          {blog.url}
+        </div>
+        <div className='likes'>
           likes:{blog.likes}
           <button onClick={onClickAddLikes}>like</button>
         </div>
-        <div>{blog.author}</div>
+        <div className='author'>
+          {blog.author}
+        </div>
         <button onClick={onClickRemoveBlog}>Remove</button>
       </div>
     )
@@ -48,7 +52,7 @@ const Blog = ({ blog, addLikes, updateBlogs, notify }) => {
 
   const blogHead = () => {
     return (
-      <div>
+      <div className='blogHead'>
         {blog.title} {blog.author}
         <button onClick={toggleDetailed}>view</button>
       </div>
