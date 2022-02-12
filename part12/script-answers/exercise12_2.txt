@@ -1,0 +1,22 @@
+Script started on 2022-01-29 20:42:20+08:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="120" LINES="26"]
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+]0;coegle@DESKTOP-552BSBE: ~[01;32mcoegle@DESKTOP-552BSBE[00m:[01;34m~[00m$ docker run [K[K[K[Kcontainer run -it ubuntu bash
+]0;root@d5a35edc17e3: /root@d5a35edc17e3:/# [K]0;root@d5a35edc17e3: /root@d5a35edc17e3:/# [K]0;root@d5a35edc17e3: /root@d5a35edc17e3:/# [K]0;root@d5a35edc17e3: /root@d5a35edc17e3:/# [K]0;root@d5a35edc17e3: /root@d5a35edc17e3:/# mkder  ir /       cd /usr/src
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# mkdir app   /app
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# cd app
+bash: cd: app: No such file or directory
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# ls  ls -  
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# mkdir app
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# ls
+[0m[01;34mapp[0m
+]0;root@d5a35edc17e3: /usr/srcroot@d5a35edc17e3:/usr/src# cd app
+]0;root@d5a35edc17e3: /usr/src/approot@d5a35edc17e3:/usr/src/app# touch index.js
+]0;root@d5a35edc17e3: /usr/src/approot@d5a35edc17e3:/usr/src/app# ls
+index.js
+]0;root@d5a35edc17e3: /usr/src/approot@d5a35edc17e3:/usr/src/app# exit
+exit
+]0;coegle@DESKTOP-552BSBE: ~[01;32mcoegle@DESKTOP-552BSBE[00m:[01;34m~[00m$ exit
+
+Script done on 2022-01-29 20:44:08+08:00 [COMMAND_EXIT_CODE="0"]

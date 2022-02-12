@@ -1,0 +1,41 @@
+Script started on 2022-02-02 18:54:23+08:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="116" LINES="35"]
+]0;coegle@DESKTOP-552BSBE: ~/todo-app/todo-backend[01;32mcoegle@DESKTOP-552BSBE[00m:[01;34m~/todo-app/todo-backend[00m$ docker exec -it todo-backend_mongo_1 mongo -u root -p example[15P-compose -f docker-compose.dev.yml up -d[K -d exec -it todo-backend_mongo_1 mongo -u root -p example
+[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kdocker exec tot[Kdo-backend_redis_1 [C[1@ [1@-[1@i[1@t[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Credis-ci[Kli
+[6n[999C[6n[115D127.0.0.1:6379> 
+[0K127.0.0.1:6379> keys *
+[22C
+1) "added_todos"
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> get added_todos
+[31C
+"1001"
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> set added_todos 9001
+[36C
+OK
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> get added_todos
+[31C
+"9001"
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> get added_todos
+[31C
+"9002"
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> del added_todos
+[31C
+(integer) 1
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> keys *
+[22C
+(empty array)
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> get added_todos
+[31C
+"1"
+127.0.0.1:6379> 
+[0K127.0.0.1:6379> exit
+[20C
+]0;coegle@DESKTOP-552BSBE: ~/todo-app/todo-backend[01;32mcoegle@DESKTOP-552BSBE[00m:[01;34m~/todo-app/todo-backend[00m$ exit
+
+Script done on 2022-02-02 18:57:36+08:00 [COMMAND_EXIT_CODE="0"]
